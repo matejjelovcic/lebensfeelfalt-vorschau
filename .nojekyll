@@ -1,0 +1,3 @@
+# Presence of this file disables Jekyll on GitHub Pages.
+# Without it Pages silently drops vendor/ and any _-prefixed path, which would
+# break the three.js bundle this site loads from vendor/three-build/.
