@@ -151,6 +151,11 @@
 }
 .offer::before {
   content: ''; position: absolute; inset: 0; z-index: -1;
+  /* NOTE: --img is set inline in index.html as url('../img/…'), and that path is
+     relative to THIS stylesheet, not to the document — a relative url() inside a
+     custom property resolves against the sheet that consumes it. Plain 'img/…'
+     therefore resolved to /css/img/… and 404'd, and a leading-slash '/img/…'
+     broke as soon as the site was served from a subpath instead of the root. */
   background-image: var(--img); background-size: cover; background-position: center;
   opacity: 0.24; transition: opacity .6s ease, transform .8s cubic-bezier(.22,1,.36,1);
   transform: scale(1.05);
