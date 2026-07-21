@@ -116,10 +116,15 @@
         const span = cw * 1.34, from = -cw * 0.17;
         const x = r.dir > 0 ? from + t * span : from + span - t * span;
         const y = r.y * ch;
-        /* spacing kept coarse on purpose: the shader only holds 26 blobs, and two
-           bands running at once would otherwise overflow it and truncate mid-screen */
+        /* Emit on the SAME 16px step the cursor uses. This is the whole difference
+           between the two: the cursor lays a blob every 16px and looks liquid, while
+           the bands used cw*0.075 — a 44px step — so their leading edge jumped
+           forward 44px at a time and stuttered across his face. Matching the cursor
+           makes the band advance the same way the cursor trail does.
+           The tail is kept short (data-sweep-life) instead of coarse, so a denser
+           trail still fits the sweep slot budget. */
         const last = r.last;
-        if (!last || Math.hypot(x - last.x, y - last.y) > cw * 0.075) {
+        if (!last || Math.hypot(x - last.x, y - last.y) > 16) {
           const p = { x, y, born: now, life: sw.life, k: sw.scale, sweep: true };
           trail.push(p);
           r.last = p;
