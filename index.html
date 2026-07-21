@@ -160,13 +160,19 @@
                trail-duration is 1.6s, NOT longer: the cursor emits a blob roughly
                every 105ms, and 1.6s of them is exactly what fits in its share of the
                shader's blob slots. Raising it past that makes live blobs get evicted
-               mid-life, which pops chunks of the reveal out and reads as glitching. -->
+               mid-life, which pops chunks of the reveal out and reads as glitching.
+
+               The sweep timing below is a slower crossing with a longer-lived tail,
+               so the kettlebell and the branded shirt stay uncovered long enough to
+               actually read. life/duration sets how many blobs are alive at once:
+               1400/2200 keeps ~23 across both overlapping bands, just under the 24
+               sweep slots, so neither band gets truncated. -->
           <div class="liquid-reveal" data-liquid-reveal
                data-radius="230" data-softness="0.62" data-distortion="0.24"
                data-flow-speed="0.16" data-inertia="0.085" data-trail-duration="1.6"
                data-gooeyness="0.62" data-heal-on-leave="1"
-               data-auto-sweep="1" data-sweep-period="5200" data-sweep-duration="1900"
-               data-sweep-gap="620" data-sweep-life="1150" data-sweep-scale="0.95"
+               data-auto-sweep="1" data-sweep-period="5600" data-sweep-duration="2200"
+               data-sweep-gap="700" data-sweep-life="1400" data-sweep-scale="0.95"
                data-sweep-ys="0.20,0.84">
             <img data-lr-bottom src="img/reveal-cut.webp?v=13" alt="" aria-hidden="true">
             <img data-lr-top class="hero__portrait" src="img/hero-cut.webp?v=13" alt="Patrick Holz — Personal Trainer &amp; Ernährungscoach">
