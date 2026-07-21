@@ -58,7 +58,7 @@
     /* Blob slots, split by class — must sum to the shader's MAX. Two bands need
        ~11 live blobs each to draw an unbroken sweep, so 24 leaves headroom while
        they overlap; the cursor gets the rest. See the trim in pump(). */
-    const SWEEP_SLOTS = 32;
+    const SWEEP_SLOTS = 24;
     const CURSOR_SLOTS = 16;
     let trail = [];
     let raf = 0;
@@ -87,15 +87,9 @@
     const strengthOf = (p, now) => {
       if (p.hold) return 1;
       // sweep blobs carry their own (shorter) life and their own thickness
-      const age = (now - p.born) / (p.life || cfg.trailDuration);
-      const a = 1 - age;
+      const a = 1 - (now - p.born) / (p.life || cfg.trailDuration);
       if (a <= 0) return 0;
-      /* Ease blobs IN over the first sixth of their life. They used to appear at
-         full strength the instant they were created, and because the metaball
-         threshold turns strength into an abrupt on/off, every new blob punched a
-         visible bubble into the mask edge — a steady stipple of pops travelling
-         with the band. Growing them in makes the leading edge advance instead. */
-      const s = a * a * (p.k || 1) * Math.min(1, age / 0.16);
+      const s = a * a * (p.k || 1);
       /* Cursor blobs fade by RANK as well as by age, and the weaker of the two wins.
          Age alone is not enough: a blob is also emitted every 16px of travel, so a
          fast flick can mint far more blobs than the cursor's slot budget holds, and
@@ -122,12 +116,10 @@
         const span = cw * 1.34, from = -cw * 0.17;
         const x = r.dir > 0 ? from + t * span : from + span - t * span;
         const y = r.y * ch;
-        /* Tighter spacing than before (was .075 of the width, a 44px step). Coarse
-           steps made the band advance in visible jumps rather than flowing; with
-           32 sweep slots we can afford to lay the trail down almost twice as
-           densely, which is what makes the leading edge read as liquid. */
+        /* spacing kept coarse on purpose: the shader only holds 26 blobs, and two
+           bands running at once would otherwise overflow it and truncate mid-screen */
         const last = r.last;
-        if (!last || Math.hypot(x - last.x, y - last.y) > cw * 0.042) {
+        if (!last || Math.hypot(x - last.x, y - last.y) > cw * 0.075) {
           const p = { x, y, born: now, life: sw.life, k: sw.scale, sweep: true };
           trail.push(p);
           r.last = p;
@@ -194,8 +186,19 @@
            constant offset is invisible. Rendering still stops, so idle cost is nil. */
         if (renderer) renderer(now);
         raf = 0;
-        // sleep until the next band is due, then restart — costs nothing in between
-        if (sw.on && sw.visible) setTimeout(wake, Math.max(30, sw.next - performance.now()));
+        /* Sleep until the next band is due, then restart — costs nothing in between.
+           This MUST NOT be conditional on sw.visible. It used to be, and that made
+           the whole effect a coin flip: the hero is pinned by ScrollTrigger, and a
+           pin wrap or refresh can make the IntersectionObserver report
+           not-intersecting for a moment. If that landed while the engine was going
+           idle, no timer was scheduled at all and the sweeps never came back for the
+           rest of the page's life — which is exactly why the reveal kept vanishing
+           on some loads and not others. Always keep a heartbeat; when off-screen it
+           is a bare timer that schedules no rendering, so it stays free. */
+        if (sw.on) {
+          const wait = sw.visible ? Math.max(30, sw.next - performance.now()) : 400;
+          setTimeout(wake, wait);
+        }
         return;
       }
       canvas.classList.add('is-live');     // sweeps need it live without a pointerenter
@@ -244,7 +247,10 @@
          happened to fire AFTER the images decoded (wake() bails while !ready and
          nothing re-triggered it), which made the whole effect come and go
          depending on whether the images were cached. */
-      if (sw.on && sw.visible) wake();
+      /* Same reasoning as the sleep path: start on sw.on alone. If sw.visible
+         happened to be false at boot the engine never started and, with no timer
+         pending, nothing would ever start it. */
+      if (sw.on) wake();
     });
 
     // ================= WebGL path =================
@@ -260,7 +266,7 @@
          alone emitted ~18 blobs/sec with a 3.4s life (60+ concurrent), so blobs
          were being hard-evicted at full strength every frame. That eviction WAS
          the glitch — chunks of the reveal popping out of existence mid-sweep. */
-      const MAX = 48;
+      const MAX = 40;
       const vs = `attribute vec2 aPos; varying vec2 vUv;
         void main(){ vUv = aPos * 0.5 + 0.5; gl_Position = vec4(aPos, 0.0, 1.0); }`;
       const fs = `precision highp float;
