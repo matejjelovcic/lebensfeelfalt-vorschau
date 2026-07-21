@@ -39,7 +39,13 @@
     const r = hero.getBoundingClientRect();
     w = Math.max(1, Math.round(r.width));
     h = Math.max(1, Math.round(r.height));
-    dpr = Math.min(devicePixelRatio || 1, 1.75);
+    /* 1.25, not 1.75. This is a Canvas2D fill of 11 large soft ellipses over the
+       whole viewport every frame, and Canvas2D fill cost scales straight with the
+       backing store — at 1.75 that is 2520x1575. It shares a Retina frame budget
+       with the three.js props and the reveal shader, and the three together were
+       dropping frames. These shapes are blurred and low-contrast: nobody can see
+       the resolution, everybody can see a stutter. */
+    dpr = Math.min(devicePixelRatio || 1, 1.25);
     canvas.width = Math.round(w * dpr);
     canvas.height = Math.round(h * dpr);
     canvas.style.width = w + 'px';

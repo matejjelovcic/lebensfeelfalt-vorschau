@@ -21,7 +21,12 @@ if (canvas && hero && innerWidth > 900) init();
 function init() {
   THREE.ColorManagement.enabled = true;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  /* 1.25, not 2. The hero stacks THREE full-viewport canvases — this one, the
+     ellipse field, and the liquid reveal — and at 2x this one alone is 2880x1800 =
+     5.2M px every frame. Together they pushed a Retina screen well below 60fps,
+     which is what read as the hero being glitchy. These are two soft-focus props:
+     the extra resolution is not visible, the dropped frames are. */
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.25));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.setClearAlpha(0);
 

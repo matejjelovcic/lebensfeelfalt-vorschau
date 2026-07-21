@@ -58,8 +58,8 @@
     /* Blob slots, split by class — must sum to the shader's MAX. Two bands need
        ~11 live blobs each to draw an unbroken sweep, so 24 leaves headroom while
        they overlap; the cursor gets the rest. See the trim in pump(). */
-    const SWEEP_SLOTS = 24;
-    const CURSOR_SLOTS = 16;
+    const SWEEP_SLOTS = 40;
+    const CURSOR_SLOTS = 24;
     let trail = [];
     let raf = 0;
     let renderer = null;
@@ -75,7 +75,14 @@
          its noise CRAWLED as it animated. That stair-stepped, shimmering edge was
          most of what read as "glitchy". The per-blob cost is now trivial (one fbm
          sample per pixel, hoisted out of the loop), so the pixels are affordable. */
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      /* 1.5, not 2. This shader is O(blobs) PER PIXEL, so the backing store is the
+         single biggest cost: at 2x it is 1276x1700 = 2.17M px, and with a dense
+         trail that measured 50.8fps idle and 35.3fps with the cursor moving on a
+         Retina screen — dropped frames, which is exactly what looked glitchy. Every
+         "60fps" reading before this was taken at 1x, a quarter of the work, which is
+         why the tests disagreed with what was actually on screen.
+         1.5 keeps the edge visibly sharper than 1x at roughly half the pixels of 2x. */
+      dpr = Math.min(window.devicePixelRatio || 1, 1.35);
       canvas.width = Math.round(cw * dpr);
       canvas.height = Math.round(ch * dpr);
     };
@@ -124,7 +131,7 @@
            The tail is kept short (data-sweep-life) instead of coarse, so a denser
            trail still fits the sweep slot budget. */
         const last = r.last;
-        if (!last || Math.hypot(x - last.x, y - last.y) > 16) {
+        if (!last || Math.hypot(x - last.x, y - last.y) > 10 || now - last.born > 55) {
           const p = { x, y, born: now, life: sw.life, k: sw.scale, sweep: true };
           trail.push(p);
           r.last = p;
@@ -144,7 +151,7 @@
            full life inside CURSOR_SLOTS and never has to evict a live blob. */
         let head = null;
         for (let i = trail.length - 1; i >= 0; i--) if (!trail[i].sweep) { head = trail[i]; break; }
-        if (!head || Math.hypot(cur.x - head.x, cur.y - head.y) > 16 || now - head.born > 105) {
+        if (!head || Math.hypot(cur.x - head.x, cur.y - head.y) > 10 || now - head.born > 55) {
           trail.push({ x: cur.x, y: cur.y, born: now });
         }
         if (!cfg.healOnLeave) trail.forEach((p) => { p.hold = false; });
@@ -271,7 +278,12 @@
          alone emitted ~18 blobs/sec with a 3.4s life (60+ concurrent), so blobs
          were being hard-evicted at full strength every frame. That eviction WAS
          the glitch — chunks of the reveal popping out of existence mid-sweep. */
-      const MAX = 40;
+      /* 64, because DENSITY is what makes this read as liquid. The engine on the
+         other sites lays a blob every 10px / 55ms and never looked glitchy; the
+         ceiling has to be high enough to hold a trail that fine for two bands plus
+         the cursor at once. The loop breaks at uCount, so a higher ceiling costs
+         uniform space, not per-pixel work. */
+      const MAX = 64;
       const vs = `attribute vec2 aPos; varying vec2 vUv;
         void main(){ vUv = aPos * 0.5 + 0.5; gl_Position = vec4(aPos, 0.0, 1.0); }`;
       const fs = `precision highp float;

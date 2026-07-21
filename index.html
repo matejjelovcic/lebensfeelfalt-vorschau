@@ -157,10 +157,15 @@
         <canvas class="hero-props" id="heroProps" aria-hidden="true"></canvas>
         <div class="hero__portrait-wrap">
           <!-- both layers are cut-outs of Patrick alone — no photo background, no frame.
-               trail-duration is 1.6s, NOT longer: the cursor emits a blob roughly
-               every 105ms, and 1.6s of them is exactly what fits in its share of the
-               shader's blob slots. Raising it past that makes live blobs get evicted
-               mid-life, which pops chunks of the reveal out and reads as glitching.
+
+               Emission matches the engine running on the other sites: a blob every
+               10px OR 55ms, for the cursor AND for the automatic bands. Density is
+               what makes it read as liquid — coarser steps make the leading edge
+               advance in visible jumps, which is exactly what looked glitchy here.
+
+               trail-duration 1.3s follows from that cadence: at 55ms a 1.3s trail is
+               ~24 blobs, which is the cursor's slot budget. Longer, and live blobs
+               get evicted mid-life and pop chunks of the reveal out.
 
                The sweep timing below is a slower crossing with a longer-lived tail,
                so the kettlebell and the branded shirt stay uncovered long enough to
@@ -169,10 +174,10 @@
                sweep slots, so neither band gets truncated. -->
           <div class="liquid-reveal" data-liquid-reveal
                data-radius="230" data-softness="0.62" data-distortion="0.24"
-               data-flow-speed="0.16" data-inertia="0.085" data-trail-duration="1.6"
+               data-flow-speed="0.16" data-inertia="0.085" data-trail-duration="0.9"
                data-gooeyness="0.62" data-heal-on-leave="1"
                data-auto-sweep="1" data-sweep-period="5600" data-sweep-duration="2200"
-               data-sweep-gap="700" data-sweep-life="500" data-sweep-scale="0.95"
+               data-sweep-gap="700" data-sweep-life="300" data-sweep-scale="0.95"
                data-sweep-ys="0.20,0.84">
             <img data-lr-bottom src="img/reveal-cut.webp?v=13" alt="" aria-hidden="true">
             <img data-lr-top class="hero__portrait" src="img/hero-cut.webp?v=13" alt="Patrick Holz — Personal Trainer &amp; Ernährungscoach">
@@ -337,10 +342,10 @@
   <script src="vendor/ScrollTrigger.min.js"></script>
   <script src="vendor/ScrollSmoother.min.js"></script>
   <script src="vendor/SplitText.min.js"></script>
-  <script src="js/flow-lines.js?v=4"></script>
-  <script src="js/liquid-reveal.js?v=14"></script>
+  <script src="js/flow-lines.js?v=5"></script>
+  <script src="js/liquid-reveal.js?v=17"></script>
   <script type="module" src="js/scene.js?v=2"></script>
-  <script type="module" src="js/hero-props.js?v=5"></script>
+  <script type="module" src="js/hero-props.js?v=6"></script>
   <script src="js/main.js?v=6"></script>
 </body>
 </html>
