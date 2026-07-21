@@ -1,0 +1,294 @@
+/* ================= PATRICKS WELT — LebensFEELfalt design system =================
+   Calm, warm, premium wellness. His real brand colours: sage-green + slate-blue + cream.
+   A distinct visual language from the Kovač site: soft glass, organic depth, warm serif. */
+:root {
+  --sage: #6bb29b;
+  --sage-deep: #4e9079;
+  --sage-soft: #a7d0c1;
+  --slate: #3f5064;
+  --slate-deep: #2a3746;
+  --slate-soft: #6d7f92;
+  --cream: #f5f1e7;
+  --cream-warm: #ece3d3;
+  --ink: #1f2c27;         /* deep slate-green for dark sections / text */
+  --paper: var(--cream);
+  --glass: rgba(255, 255, 255, 0.16);
+  --glass-line: rgba(255, 255, 255, 0.4);
+  --shadow-soft: 0 24px 60px rgba(31, 44, 39, 0.14);
+  --shadow-lift: 0 40px 90px rgba(31, 44, 39, 0.22);
+
+  --sans: 'Archivo', system-ui, sans-serif;
+  --display: 'Fraunces', Georgia, serif;
+  --serif: 'Fraunces Text', Georgia, serif;
+
+  --r-sm: 4px; --r-md: 16px; --r-lg: 22px;
+  --fs-body: 1.0625rem; --lh-body: 1.72; --fs-lead: 1.2rem;
+}
+/* shared running-text scale */
+.world__lead, .offer__desc, .warum__text p, .angebote__sub, .pdf__card p, .footer__lead {
+  font-size: var(--fs-body); line-height: var(--lh-body);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; }
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+}
+img, canvas, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--sage); color: #fff; }
+
+/* ---------- reusable glass panel ---------- */
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-line);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,0.35);
+}
+
+/* ---------- fixed UI ---------- */
+.grain {
+  position: fixed; inset: 0; z-index: 60; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 240px 240px; opacity: 0.035;
+}
+.cursor { position: fixed; top: 0; left: 0; z-index: 90; pointer-events: none; }
+.cursor__dot {
+  display: block; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--sage-deep); transform: translate(-50%, -50%);
+  transition: width .3s cubic-bezier(.22,1,.36,1), height .3s cubic-bezier(.22,1,.36,1), background .3s;
+}
+.cursor.is-hover .cursor__dot { width: 68px; height: 68px; background: rgba(107,178,155,0.22); border: 1px solid var(--sage-deep); }
+.cursor__label {
+  position: absolute; top: 0; left: 0; transform: translate(-50%,-50%);
+  font-size: 0.58rem; font-weight: 600; letter-spacing: 0.12em; color: var(--slate-deep);
+  opacity: 0; white-space: nowrap; text-transform: uppercase;
+}
+.cursor.is-hover .cursor__label { opacity: 1; }
+@media (hover: none) { .cursor { display: none; } body { cursor: auto; } }
+
+.progress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 100%;
+  background: var(--sage); z-index: 80; transform-origin: 0 0; transform: scaleX(0);
+}
+
+/* ================= LOADER (igloo-style minimal) ================= */
+.loader {
+  position: fixed; inset: 0; z-index: 200;
+  background: var(--cream);
+  display: flex; align-items: center; justify-content: center; flex-direction: column;
+}
+.loader__brand {
+  font-family: var(--serif); font-size: clamp(1.4rem, 3vw, 2.2rem);
+  color: var(--slate-deep); letter-spacing: 0.01em;
+}
+.loader__brand em { font-style: normal; color: var(--sage-deep); }
+.loader__bar {
+  margin-top: 1.6rem; width: min(260px, 60vw); height: 2px;
+  background: rgba(63,80,100,0.15); overflow: hidden; border-radius: 2px;
+}
+.loader__fill { height: 100%; width: 0%; background: var(--sage); }
+.loader__pct {
+  position: absolute; bottom: 5vh; right: 5vw;
+  font-family: var(--display); font-size: clamp(2rem, 5vw, 3.5rem); color: var(--slate-deep);
+}
+
+/* ================= NAV ================= */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.1rem 1.8rem;
+}
+.nav__bar {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 2rem;
+  padding: 0.7rem 0.7rem 0.7rem 1.5rem;
+  border-radius: 999px;
+  background: rgba(245, 241, 231, 0.86);
+  border: 1px solid rgba(63, 80, 100, 0.09);
+  box-shadow: 0 10px 34px rgba(31, 44, 39, 0.07);
+  transition: background .45s ease, border-color .45s ease, box-shadow .45s ease;
+}
+.nav__brand { display: flex; flex-direction: column; line-height: 1.02; }
+.nav__brand-text { font-family: var(--serif); font-size: 1.16rem; font-weight: 600; letter-spacing: 0.005em; }
+.nav__brand-text em { font-style: normal; color: var(--sage-deep); }
+.nav__brand-sub {
+  font-size: 0.52rem; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--slate-soft); margin-top: 3px;
+}
+.nav__links {
+  justify-self: center; display: flex; gap: 1.9rem;
+  font-size: 0.71rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+}
+.nav__links a span { position: relative; display: inline-block; padding-bottom: 3px; }
+.nav__links a span::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: currentColor; transform: scaleX(0); transform-origin: right;
+  transition: transform .5s cubic-bezier(.22,1,.36,1);
+}
+.nav__links a:hover span::after { transform: scaleX(1); transform-origin: left; }
+.nav__cta {
+  justify-self: end; display: inline-flex; align-items: center; gap: 0.55rem;
+  background: var(--slate-deep); color: var(--cream);
+  font-size: 0.67rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.78rem 1.3rem; border-radius: 999px;
+  transition: background .35s ease;
+}
+.nav__cta i { font-style: normal; transition: transform .35s cubic-bezier(.22,1,.36,1); }
+.nav__cta:hover { background: var(--sage-deep); }
+.nav__cta:hover i { transform: translateX(4px); }
+/* over dark sections */
+.nav--light .nav__bar { background: rgba(24, 34, 30, 0.72); border-color: rgba(245,241,231,0.14); box-shadow: none; }
+.nav--light { color: var(--cream); }
+.nav--light .nav__brand-text em { color: var(--sage-soft); }
+.nav--light .nav__brand-sub { color: rgba(245,241,231,0.55); }
+.nav--light .nav__cta { background: var(--cream); color: var(--ink); }
+
+/* ---------- dynamic hero background (soft moving light, no particles) ---------- */
+.hero__bg { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+/* drifting contour field — sits under the glows, never stops moving */
+.hero__lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero__glow { position: absolute; border-radius: 50%; will-change: transform; }
+.hero__glow--a {
+  width: 72vw; height: 72vw; left: -22vw; top: -26vw;
+  background: radial-gradient(circle at center, rgba(107,178,155,0.34), rgba(107,178,155,0) 66%);
+}
+.hero__glow--b {
+  width: 62vw; height: 62vw; right: -18vw; bottom: -22vw;
+  background: radial-gradient(circle at center, rgba(63,80,100,0.20), rgba(63,80,100,0) 66%);
+}
+.hero__glow--c {
+  width: 48vw; height: 48vw; left: 34vw; top: 34vh;
+  background: radial-gradient(circle at center, rgba(236,227,211,0.9), rgba(236,227,211,0) 68%);
+}
+.hero__rule {
+  position: absolute; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(63,80,100,0.12) 28%, rgba(63,80,100,0.12) 72%, transparent);
+}
+.hero__rule--l { left: 17vw; }
+.hero__rule--r { right: 17vw; }
+
+/* ================= HERO (liquid reveal, recoloured) ================= */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--paper); overflow: hidden;
+}
+/* props layer: the cut-out photographs live on meshes inside this canvas so they can
+   deform. Above the ghost wordmark, below the portrait, and transparent to the
+   pointer — proximity is measured in JS, so it never steals the liquid reveal. */
+.hero-props {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  z-index: 1; pointer-events: none;
+}
+.hero__ghost {
+  position: absolute; top: 50%; left: 50%;
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(6rem, 20vw, 20rem); line-height: 0.9;
+  color: transparent; -webkit-text-stroke: 1px rgba(63,80,100,0.14);
+  white-space: nowrap; user-select: none; z-index: 0;
+}
+/* big, but with headroom — cropping his head to chase size looks worse than the
+   extra 60px is worth */
+/* Anchored to the bottom and deliberately taller than the hero, so the straight
+   line where the source photo crops his torso falls BELOW the fold. The only
+   edges you can see are his own silhouette. */
+.hero__portrait-wrap {
+  position: relative; z-index: 2;
+  /* Centred, with the Springseil and the Widerstandsband flanking him.
+     Three things fight for the same vertical space, and this is the only geometry
+     that satisfies all three:
+       1. The Stirnband (photo y .05-.30) has to be on screen.
+       2. The kettlebell runs to photo y .999 and the photo's bottom row is fully
+          opaque — the bell is cut off by the photograph itself, so the ONLY way to
+          show more of it is to show more of the photo. Its bottom edge therefore
+          sits flush with the viewport bottom (margin-bottom: 0), which shows the
+          maximum available bell and parks that hard cut where nobody can see it.
+       3. The corner captions share his vertical band, so he has to stay clear of
+          them HORIZONTALLY. At 1440x900 he spans x 425-1015; the captions end at
+          x 369 and start at x 1027, so they read against the background instead.
+     Sizing by vh as well as vw keeps all three true on short laptop viewports. */
+  align-self: flex-end; margin-bottom: 0;
+  width: min(41vw, 66vh); transform-style: preserve-3d;
+}
+/* Clean edge, nothing else. The liquid-reveal brief bans strokes, outlines, halos
+   and shadows around the mask — the feathered edge I had here WAS a halo, and it
+   made the portrait read like a memorial photo. No card, no shadow, no fade. */
+.liquid-reveal {
+  position: relative; width: 100%; aspect-ratio: 3 / 4; overflow: hidden;
+  border-radius: 0; box-shadow: none;
+  /* His photo crops his arms at its own frame edge from 63% down, and the
+     kettlebell lives in that same band — so the crop cannot be hidden by
+     framing. Soften ONLY the outer 4% of the sides, and only below 55% height:
+     his face and torso keep a hard edge, the low arms just fall off. */
+  -webkit-mask-image:
+    linear-gradient(to bottom, #000 0 55%, transparent 55%),
+    linear-gradient(to right, transparent 0, #000 4.5%, #000 95.5%, transparent 100%);
+  -webkit-mask-composite: source-over;
+  mask-image:
+    linear-gradient(to bottom, #000 0 55%, transparent 55%),
+    linear-gradient(to right, transparent 0, #000 4.5%, #000 95.5%, transparent 100%);
+  mask-composite: add;
+}
+.liquid-reveal img, .liquid-reveal canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* the bottom layer exists only as a texture source for the shader. Left visible it
+   peeks out wherever its matte is wider than the top's — his sunlit hair wisps
+   ringed the cut-out in gold. The canvas does all the blending. */
+.liquid-reveal [data-lr-bottom] { opacity: 0; }
+.liquid-reveal canvas { pointer-events: none; opacity: 0; }
+.liquid-reveal canvas.is-live { opacity: 1; }
+.hero__portrait { filter: saturate(1.02); }
+/* corner captions: these are the only words in the hero, so they have to be read
+   at a glance — display face for the name, quiet uppercase for the qualifier */
+.hero__meta {
+  position: absolute; bottom: 6vh; z-index: 3;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  color: var(--slate-deep);
+}
+.hero__meta span:first-child {
+  font-family: var(--display); font-weight: 400; text-transform: none;
+  font-size: clamp(1.35rem, 2.3vw, 2.3rem); line-height: 1;
+  letter-spacing: -0.01em;
+}
+.hero__meta span + span {
+  font-size: clamp(0.66rem, 0.92vw, 0.86rem); font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate);
+}
+.hero__meta--left { left: 3.5vw; }
+.hero__meta--right { right: 3.5vw; text-align: right; }
+.hero__meta .accent { color: var(--sage-deep); }
+.hero__scroll {
+  position: absolute; bottom: 3vh; left: 50%; transform: translateX(-50%); z-index: 3;
+  font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--slate);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.hero__scroll span { display: block; width: 40px; height: 1px; background: var(--slate); }
+
+/* ================= responsive base ================= */
+@media (max-width: 900px) {
+  .hero__portrait-wrap { width: min(96vw, 74vh); }
+  .nav__links { display: none; }
+  .hero-props { display: none; }   /* no room beside the portrait on phones */
+}
+
+/* Phones: the two corner captions are pinned to opposite edges of the same line,
+   which collides head-on once the viewport is narrow — they literally overlapped
+   into "Patrick HolEin gesünderes Leben". Stack them instead: the name sits above
+   the location, both left-aligned, and the whole block clears the scroll cue. */
+@media (max-width: 640px) {
+  .hero__meta { position: static; bottom: auto; left: auto; right: auto; }
+  .hero__meta--right { text-align: left; }
+  /* Sit them ABOVE him, not below. His photo is pinned to the bottom of the hero,
+     so a bottom-anchored caption lands on his shirt and stops being readable —
+     while the band between the nav and his head is empty background. */
+  .hero__meta-stack {
+    position: absolute; top: 13vh; left: 6vw; right: 6vw; bottom: auto; z-index: 3;
+    display: flex; flex-direction: column; gap: 0.85rem;
+  }
+  .hero__meta span:first-child { font-size: clamp(1.5rem, 7.5vw, 2.1rem); }
+  .hero__meta span + span { font-size: 0.6rem; letter-spacing: 0.16em; }
+}

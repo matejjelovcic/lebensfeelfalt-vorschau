@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LebensFEELfalt by Patrick Holz — Sport &amp; Ernährung</title>
+  <meta name="description" content="LebensFEELfalt by Patrick Holz — Personal Training und bewusste Ernährung für ein gesünderes Leben. Alltagstauglich, ohne Abo, ohne versteckte Kosten.">
+  <meta name="theme-color" content="#f5f1e7">
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/fraunces-v38-latin_latin-ext-900.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/fraunces-v38-latin_latin-ext-italic.woff2" crossorigin>
+  <link rel="preload" as="image" href="img/hero-cut.webp?v=12">
+  <link rel="preload" as="image" href="img/reveal-cut.webp?v=12">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%236bb29b'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='28' font-weight='700' text-anchor='middle' fill='%23fff'%3ELF%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
+  <link rel="stylesheet" href="css/style.css?v=15">
+  <link rel="stylesheet" href="css/sections.css?v=2">
+  <script type="importmap">
+  { "imports": {
+      "three": "./vendor/three-build/three.module.js",
+      "three/addons/": "./vendor/three-jsm/"
+  } }
+  </script>
+</head>
+<body>
+
+  <!-- ======== LOADER ======== -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__brand">Lebens<em>FEEL</em>falt</div>
+    <div class="loader__bar"><div class="loader__fill" id="loaderFill"></div></div>
+    <div class="loader__pct" id="loaderPct">0</div>
+  </div>
+
+  <!-- ======== FIXED UI ======== -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__label" id="cursorLabel"></span></div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <!-- ======== FILM: fixed scroll-driven frame sequence (immune to sticky issues) ======== -->
+  <!-- Six clips that simply loop. Scroll never touches playback — it only cross-dissolves
+       one clip into the next and drives the copy in and out. -->
+  <div class="film" id="film" aria-hidden="true">
+    <div class="film__stack" id="filmStack">
+      <video class="film__v" data-i="0" src="video/web2/chop.mp4"     muted loop playsinline preload="auto"></video>
+      <video class="film__v" data-i="1" src="video/web2/smoothie.mp4" muted loop playsinline preload="none"></video>
+      <video class="film__v" data-i="2" src="video/web2/scatter.mp4"  muted loop playsinline preload="none"></video>
+      <video class="film__v" data-i="3" src="video/web2/steam.mp4"    muted loop playsinline preload="none"></video>
+      <video class="film__v" data-i="4" src="video/web2/kettle.mp4"   muted loop playsinline preload="none"></video>
+      <video class="film__v" data-i="5" src="video/web2/run.mp4"      muted loop playsinline preload="none"></video>
+    </div>
+    <div class="film__grade"></div>
+
+    <!-- two beats per clip: one from the left, then one from the right -->
+    <div class="film__panels" id="filmPanels">
+      <div class="fpanel fpanel--l" data-v="0" data-s="0">
+        <span class="fpanel__no">01</span>
+        <h3 class="fpanel__title">Bewusst <em>essen.</em></h3>
+        <p class="fpanel__text">Frisch, regional, saisonal. Kein Pulver, keine Wunderkur — echtes Essen, das dir schmeckt.</p>
+      </div>
+      <div class="fpanel fpanel--r" data-v="0" data-s="1">
+        <span class="fpanel__no">02</span>
+        <h3 class="fpanel__title">Ohne <em>Kalorien&shy;zählen.</em></h3>
+        <p class="fpanel__text">Du lernst, was dein Körper braucht. Danach brauchst du keine App mehr, die mitzählt.</p>
+      </div>
+
+      <div class="fpanel fpanel--l" data-v="1" data-s="0">
+        <span class="fpanel__no">03</span>
+        <h3 class="fpanel__title">Kein <em>Verzicht.</em></h3>
+        <p class="fpanel__text">Du isst weiter, worauf du Bock hast. Wir ändern nicht was, sondern wie.</p>
+      </div>
+      <div class="fpanel fpanel--r" data-v="1" data-s="1">
+        <span class="fpanel__no">04</span>
+        <h3 class="fpanel__title">Alltags&shy;<em>tauglich.</em></h3>
+        <p class="fpanel__text">Rezepte für Menschen mit Job, Familie und wenig Zeit. In 20 Minuten auf dem Tisch.</p>
+      </div>
+
+      <div class="fpanel fpanel--l" data-v="2" data-s="0">
+        <span class="fpanel__no">05</span>
+        <h3 class="fpanel__title">Frisch. <em>Regional.</em></h3>
+        <p class="fpanel__text">Vitalstoffe, die wirklich ankommen — statt leerer Kalorien, die nur satt machen.</p>
+      </div>
+      <div class="fpanel fpanel--r" data-v="2" data-s="1">
+        <span class="fpanel__no">06</span>
+        <h3 class="fpanel__title">Dein <em>Plan.</em></h3>
+        <p class="fpanel__text">Kein Standard-PDF. Eine Ernährung, die zu deinem Ziel und deinem Kühlschrank passt.</p>
+      </div>
+
+      <div class="fpanel fpanel--l" data-v="3" data-s="0">
+        <span class="fpanel__no">07</span>
+        <h3 class="fpanel__title">Ohne <em>Diätwahn.</em></h3>
+        <p class="fpanel__text">Warme, echte Mahlzeiten statt leerem Verzicht. Essen soll Freude machen, nicht Angst.</p>
+      </div>
+      <div class="fpanel fpanel--r" data-v="3" data-s="1">
+        <span class="fpanel__no">08</span>
+        <h3 class="fpanel__title">Dauerhaft <em>bleiben.</em></h3>
+        <p class="fpanel__text">Nicht sechs Wochen durchhalten. Sondern etwas finden, das du gar nicht mehr aufgeben willst.</p>
+      </div>
+
+      <div class="fpanel fpanel--l" data-v="4" data-s="0">
+        <span class="fpanel__no">09</span>
+        <h3 class="fpanel__title">Echtes <em>Training.</em></h3>
+        <p class="fpanel__text">Übungen, die zu deinem Körper passen — nicht die, die gerade im Trend sind.</p>
+      </div>
+      <div class="fpanel fpanel--r" data-v="4" data-s="1">
+        <span class="fpanel__no">10</span>
+        <h3 class="fpanel__title">1:1 oder <em>Gruppe.</em></h3>
+        <p class="fpanel__text">Allein, zu zweit oder mit Freunden. Bei dir zu Hause, draußen oder im Studio.</p>
+      </div>
+
+      <div class="fpanel fpanel--l" data-v="5" data-s="0">
+        <span class="fpanel__no">11</span>
+        <h3 class="fpanel__title">In <em>Bewegung</em> bleiben.</h3>
+        <p class="fpanel__text">Dein Tempo, dein Leben. Wir bauen Bewegung so ein, dass sie bleibt.</p>
+      </div>
+      <div class="fpanel fpanel--r" data-v="5" data-s="1">
+        <span class="fpanel__no">12</span>
+        <h3 class="fpanel__title">Wir fangen <em>an.</em></h3>
+        <p class="fpanel__text">Ein Gespräch, eine ehrliche Bestandsaufnahme — und dann der erste Schritt.</p>
+      </div>
+    </div>
+  </div>
+
+  <header class="nav" id="nav">
+    <div class="nav__bar">
+      <a class="nav__brand" href="#top" data-cursor="Start">
+        <span class="nav__brand-text">Lebens<em>FEEL</em>falt</span>
+        <span class="nav__brand-sub">by Patrick Holz</span>
+      </a>
+      <nav class="nav__links">
+        <a href="#journey" data-cursor="Ansehen"><span>Philosophie</span></a>
+        <a href="#welten" data-cursor="Ansehen"><span>Sport &amp; Ernährung</span></a>
+        <a href="#angebote" data-cursor="Ansehen"><span>Angebote</span></a>
+        <a href="#warum" data-cursor="Ansehen"><span>Über mich</span></a>
+      </nav>
+      <a class="nav__cta" href="#kontakt" data-cursor="Los">
+        <span>Termin sichern</span>
+        <i aria-hidden="true">→</i>
+      </a>
+    </div>
+  </header>
+
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+
+      <!-- ======== 1 · HERO — liquid reveal ======== -->
+      <section class="hero" id="top">
+        <div class="hero__bg" aria-hidden="true">
+          <canvas class="hero__lines" id="flowLines"></canvas>
+          <span class="hero__glow hero__glow--a"></span>
+          <span class="hero__glow hero__glow--b"></span>
+          <span class="hero__glow hero__glow--c"></span>
+          <span class="hero__rule hero__rule--l"></span>
+          <span class="hero__rule hero__rule--r"></span>
+        </div>
+        <div class="hero__ghost" aria-hidden="true">balance</div>
+        <!-- the same real photographs, mapped onto meshes so they can actually deform:
+             the rope swings like someone is skipping it, the band snaps elastically -->
+        <canvas class="hero-props" id="heroProps" aria-hidden="true"></canvas>
+        <div class="hero__portrait-wrap">
+          <!-- both layers are cut-outs of Patrick alone — no photo background, no frame.
+               trail-duration is 1.6s, NOT longer: the cursor emits a blob roughly
+               every 105ms, and 1.6s of them is exactly what fits in its share of the
+               shader's blob slots. Raising it past that makes live blobs get evicted
+               mid-life, which pops chunks of the reveal out and reads as glitching. -->
+          <div class="liquid-reveal" data-liquid-reveal
+               data-radius="230" data-softness="0.62" data-distortion="0.24"
+               data-flow-speed="0.16" data-inertia="0.085" data-trail-duration="1.6"
+               data-gooeyness="0.62" data-heal-on-leave="1"
+               data-auto-sweep="1" data-sweep-period="5200" data-sweep-duration="1900"
+               data-sweep-gap="620" data-sweep-life="1150" data-sweep-scale="0.95"
+               data-sweep-ys="0.20,0.84">
+            <img data-lr-bottom src="img/reveal-cut.webp?v=12" alt="" aria-hidden="true">
+            <img data-lr-top class="hero__portrait" src="img/hero-cut.webp?v=12" alt="Patrick Holz — Personal Trainer &amp; Ernährungscoach">
+            <canvas data-lr-canvas aria-hidden="true"></canvas>
+          </div>
+        </div>
+        <!-- wrapper is inert on desktop (the two blocks stay pinned to their own
+             corners); on phones it becomes the flex column that stacks them, since
+             opposite-pinned captions collide once the viewport gets narrow -->
+        <div class="hero__meta-stack">
+          <div class="hero__meta hero__meta--left">
+            <span>Patrick Holz</span>
+            <span class="accent">Personal Training · Ernährung</span>
+          </div>
+          <div class="hero__meta hero__meta--right">
+            <span>Ein gesünderes Leben</span>
+            <span class="accent">Raum Neustadt</span>
+          </div>
+        </div>
+        <div class="hero__scroll">Scrollen<span></span></div>
+      </section>
+
+      <!-- ======== 2 · FILM — pure scroll length; the fixed #film canvas renders it ======== -->
+      <section class="journey" id="journey"></section>
+
+      <!-- ======== 3 · 3D INTERACTIVE WORLD ======== -->
+      <section class="world" id="welten">
+        <div class="world__stage" id="worldStage">
+          <canvas class="world-canvas" id="worldCanvas" aria-hidden="true"></canvas>
+          <div class="world__intro">
+            <span class="eyebrow">Zwei Welten, ein Ziel</span>
+            <h2 class="world__title">Sport <span class="amp">&amp;</span><br><em>Ernährung.</em></h2>
+            <p class="world__lead">Alles hängt zusammen. Zieh an den beiden Objekten — dreh sie, spür den Unterschied. Beides zusammen macht dein gesünderes Leben aus.</p>
+          </div>
+          <div class="world__labels" aria-hidden="true">
+            <div class="world__label world__label--sport"><span>01</span> Training<br><em>für deinen Körper</em></div>
+            <div class="world__label world__label--food"><span>02</span> Ernährung<br><em>für dein Wohlbefinden</em></div>
+          </div>
+          <div class="world__hint" id="worldHint" data-cursor="Ziehen">↔ ziehen zum Drehen</div>
+
+          <!-- act panels: each object dives out of frame and hands over to one of these -->
+          <div class="act act--left" id="actFood" aria-hidden="true">
+            <span class="eyebrow">01 — Ernährung</span>
+            <h3 class="act__title">Iss dich <em>stark.</em></h3>
+            <p class="act__lead">Kein Verzicht, keine Kalorientabellen. Wir schauen uns an, was du wirklich isst — und bauen daraus einen Plan, der zu deinem Alltag passt.</p>
+            <ul class="act__list">
+              <li>Ernährungsanalyse &amp; persönlicher Plan</li>
+              <li>Alltagstaugliche Rezepte, regional &amp; frisch</li>
+              <li>Begleitung, bis es von allein läuft</li>
+            </ul>
+          </div>
+
+          <div class="act act--right" id="actSport" aria-hidden="true">
+            <span class="eyebrow">02 — Training</span>
+            <h3 class="act__title">Trainier dich <em>frei.</em></h3>
+            <p class="act__lead">Ob 1:1, zu zweit oder in der Gruppe — dein Training richtet sich nach deinem Körper, deinem Ziel und deiner Zeit. Nicht andersrum.</p>
+            <ul class="act__list">
+              <li>Personal Training bei dir oder draußen</li>
+              <li>Kraft, Beweglichkeit &amp; Ausdauer im Gleichgewicht</li>
+              <li>Übungen, die du dauerhaft durchhältst</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======== 4 · MANIFEST ======== -->
+      <section class="manifest" id="manifest">
+        <p class="manifest__text">
+          <span class="w"><em>Gesünder</em></span> <span class="w">leben —</span>
+          <span class="w">ganz</span> <span class="w">ohne</span> <span class="w">Stress.</span>
+          <span class="w">Bewusste</span> <span class="w"><em>Ernährung,</em></span>
+          <span class="w">echtes</span> <span class="w">Training,</span>
+          <span class="w">gemacht</span> <span class="w">für</span> <span class="w">deinen</span> <span class="w"><em>Alltag.</em></span>
+        </p>
+      </section>
+
+      <!-- ======== 5 · ANGEBOTE (glass cards) ======== -->
+      <section class="angebote" id="angebote">
+        <div class="angebote__head">
+          <span class="eyebrow">Deine Möglichkeiten</span>
+          <h2 class="section-title">Angebote</h2>
+          <p class="angebote__sub">Zielgerichtet, alltagstauglich — ohne Abo, ohne versteckte Kosten. Du zahlst nur, was du nutzt.</p>
+        </div>
+        <div class="angebote__grid">
+          <article class="offer glass" data-cursor="Mehr" style="--img:url('/img/train-coach.webp')">
+            <span class="offer__no">01</span>
+            <h3 class="offer__title">Personal Training</h3>
+            <p class="offer__desc">1:1 oder in der Kleingruppe. Übungsprogramme, die zu deinem Alltag passen — unter meiner Anleitung.</p>
+            <span class="offer__tag">1:1 &amp; Gruppe</span>
+          </article>
+          <article class="offer glass" data-cursor="Mehr" style="--img:url('/img/food-veg.webp')">
+            <span class="offer__no">02</span>
+            <h3 class="offer__title">Ernährungsberatung</h3>
+            <p class="offer__desc">Bewusste, ausgewogene Ernährung kennenlernen — Gewohnheiten analysieren und Schritt für Schritt umstellen.</p>
+            <span class="offer__tag">individuell</span>
+          </article>
+          <article class="offer glass" data-cursor="Mehr" style="--img:url('/img/o-smoothie.webp')">
+            <span class="offer__no">03</span>
+            <h3 class="offer__title">Vitalstoffkuren</h3>
+            <p class="offer__desc">Gezielte Kuren zur Verbesserung deines Wohlbefindens — als sanfte Unterstützung deiner Ziele.</p>
+            <span class="offer__tag">Wohlbefinden</span>
+          </article>
+          <article class="offer glass" data-cursor="Mehr" style="--img:url('/img/o-meal.webp')">
+            <span class="offer__no">04</span>
+            <h3 class="offer__title">Ernährungsumstellung</h3>
+            <p class="offer__desc">Kein Kalorienzählen, kein Verzicht auf alles. Regionale Lebensmittel genießen — Schritt für Schritt.</p>
+            <span class="offer__tag">alltagstauglich</span>
+          </article>
+        </div>
+      </section>
+
+      <!-- ======== 6 · WARUM ICH ======== -->
+      <section class="warum" id="warum">
+        <figure class="warum__portrait">
+          <img src="img/portrait.webp" alt="Patrick Holz">
+        </figure>
+        <div class="warum__text">
+          <span class="eyebrow">Warum ich</span>
+          <h2 class="section-title">Mit Energie<br><em>an deiner Seite.</em></h2>
+          <p>Durch meine Ausbildungen und jahrelange Berufserfahrung sind ausgeklügelte, vielfach bewährte Konzepte entstanden. Mir liegt vor allem die Alltagstauglichkeit am Herzen — du sollst dir keinen Stress machen, essen worauf du Bock hast und einfach genießen können.</p>
+          <p>Kein Abo, keine versteckten Kosten, keine Preisfallen. Du kannst alles unverbindlich kennenlernen und bezahlst immer nur das, was du genutzt hast. Und ich verspreche dir: mit voller Energie, offen und herzlich an deiner Seite.</p>
+        </div>
+      </section>
+
+      <!-- ======== 7 · GRATIS PDF ======== -->
+      <section class="pdf" id="pdf">
+        <div class="pdf__card glass" data-cursor="Download">
+          <div class="pdf__left">
+            <span class="eyebrow">Kostenlos für dich</span>
+            <h2 class="pdf__title">Dein <em>Basiswissen</em> als Gratis-PDF.</h2>
+            <p>Erste Grundsätze ausgewogener, basischer Ernährung — ein sanfter Einstieg. Enthält die Basis-Anleitung des „5 am Tag“-Prinzips und der überwiegend basischen Ernährung.</p>
+            <a class="pdf__btn" href="#kontakt" data-cursor="Los">PDF herunterladen →</a>
+          </div>
+          <div class="pdf__deco" aria-hidden="true">
+            <span>5</span><small>am Tag</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======== 8 · KONTAKT / FOOTER ======== -->
+      <footer class="footer" id="kontakt">
+        <div class="footer__inner">
+          <span class="eyebrow eyebrow--light">Fasse deinen Entschluss</span>
+          <h2 class="footer__big">Fühl<br>dein <em>Leben.</em></h2>
+          <p class="footer__lead">Gerne erstelle ich dir ein individuelles Konzept, das all deine Wünsche und Ziele berücksichtigt. Melde dich — ich freue mich auf dich.</p>
+          <div class="footer__contact">
+            <a href="mailto:info@lebensfeelfalt.de" data-cursor="E-Mail">info@lebensfeelfalt.de</a>
+            <a href="tel:+4917168444640" data-cursor="Anrufen">0171 68 44 464</a>
+            <span>Raum Neustadt</span>
+          </div>
+        </div>
+        <div class="footer__legal">
+          <span>© 2026 LebensFEELfalt by Patrick Holz</span>
+          <span>Kein Abo · Keine Fallen · Fühl dein Leben</span>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script src="vendor/ScrollSmoother.min.js"></script>
+  <script src="vendor/SplitText.min.js"></script>
+  <script src="js/flow-lines.js?v=4"></script>
+  <script src="js/liquid-reveal.js?v=11"></script>
+  <script type="module" src="js/scene.js?v=2"></script>
+  <script type="module" src="js/hero-props.js?v=5"></script>
+  <script src="js/main.js?v=6"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+/* Display = Fraunces Black (warm high-contrast serif, used huge).
+   Mapped to weight 400 so existing var(--display) rules render black without churn. */
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fraunces-v38-latin_latin-ext-900.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fraunces-v38-latin_latin-ext-900italic.woff2') format('woff2');
+}
+/* Text/editorial serif = real Fraunces regular + italic + semibold */
+@font-face {
+  font-family: 'Fraunces Text';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fraunces-v38-latin_latin-ext-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fraunces Text';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fraunces-v38-latin_latin-ext-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fraunces Text';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fraunces-v38-latin_latin-ext-600.woff2') format('woff2');
+}
+/* UI / body sans */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('archivo-v25-latin_latin-ext-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('archivo-v25-latin_latin-ext-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('archivo-v25-latin_latin-ext-700.woff2') format('woff2');
+}
