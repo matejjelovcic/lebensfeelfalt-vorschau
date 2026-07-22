@@ -175,6 +175,9 @@ const FILM = (function film() {
     const v = vids[i];
     if (!v || v._req) return;
     v._req = 1;
+    // clip 0 declares preload="auto", so the parser already started fetching it —
+    // calling load() again here downloaded the whole 2.4 MB clip a second time
+    if (v.preload === 'auto' && v.networkState !== v.NETWORK_EMPTY) return;
     v.preload = 'auto';
     v.load();
   }

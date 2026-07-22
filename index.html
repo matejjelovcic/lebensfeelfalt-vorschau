@@ -65,6 +65,11 @@
 <body>
 
   <!-- ======== LOADER ======== -->
+  <!-- Failsafe: the loader is normally removed by main.js once assets decode. If any
+       vendor script throws before that (or JS is off), this hides it after 8s so the
+       page is never stuck behind a blank overlay. -->
+  <script>setTimeout(function(){var l=document.getElementById('loader');if(l){l.style.transition='opacity .6s';l.style.opacity='0';setTimeout(function(){l.style.display='none';},600);}},8000);</script>
+  <noscript><style>#loader{display:none!important}</style></noscript>
   <div class="loader" id="loader" aria-hidden="true">
     <div class="loader__brand">Lebens<em>FEEL</em>falt</div>
     <div class="loader__bar"><div class="loader__fill" id="loaderFill"></div></div>
@@ -404,6 +409,6 @@
   <script src="js/liquid-reveal.js?v=17"></script>
   <script type="module" src="js/scene.js?v=3"></script>
   <script type="module" src="js/hero-props.js?v=6"></script>
-  <script src="js/main.js?v=8"></script>
+  <script src="js/main.js?v=9"></script>
 </body>
 </html>
