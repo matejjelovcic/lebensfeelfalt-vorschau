@@ -10,7 +10,8 @@
   --sage-soft: #a7d0c1;
   --slate: #3f5064;
   --slate-deep: #2a3746;
-  --slate-soft: #6d7f92;
+  --slate-soft: #566880;  /* darkened from #6d7f92 (3.65:1) to clear AA on cream (~4.7:1);
+                             only used for the nav sub-label and the world labels, both text */
   --cream: #f5f1e7;
   --cream-warm: #ece3d3;
   --ink: #1f2c27;         /* deep slate-green for dark sections / text */

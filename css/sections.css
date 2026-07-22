@@ -29,9 +29,11 @@
 .film__grade {
   position: absolute; inset: 0; pointer-events: none;
   /* side scrims: the copy lives on the flanks now, so that's where it needs contrast */
+  /* darker on the flanks where the copy sits (was 0.72) so the title clears contrast
+     over the footage; the centre stays clean so the video still reads */
   background:
-    linear-gradient(90deg, rgba(16,24,21,0.72), rgba(16,24,21,0.12) 38%, rgba(16,24,21,0.12) 62%, rgba(16,24,21,0.72)),
-    linear-gradient(180deg, rgba(20,30,26,0.42), transparent 26%, transparent 74%, rgba(20,30,26,0.45));
+    linear-gradient(90deg, rgba(16,24,21,0.86), rgba(16,24,21,0.10) 44%, rgba(16,24,21,0.10) 56%, rgba(16,24,21,0.86)),
+    linear-gradient(180deg, rgba(20,30,26,0.45), transparent 26%, transparent 74%, rgba(20,30,26,0.48));
 }
 /* copy sits on one half so the footage always reads on the other */
 .film__panels { position: absolute; inset: 0; pointer-events: none; }
@@ -50,14 +52,15 @@
 .fpanel__title {
   font-family: var(--display); font-weight: 400;
   font-size: clamp(2.6rem, 6.1vw, 6.6rem); line-height: 0.94;
-  text-shadow: 0 14px 70px rgba(0,0,0,0.65);
+  /* a tight halo for legibility plus the soft one for depth */
+  text-shadow: 0 2px 14px rgba(0,0,0,0.75), 0 14px 70px rgba(0,0,0,0.55);
   hyphens: auto; overflow-wrap: break-word;
 }
 .fpanel__title em { font-family: var(--serif); font-style: italic; color: var(--sage-soft); }
 .fpanel__text {
   margin-top: 1.6rem;
   font-size: clamp(1rem, 1.35vw, 1.35rem); line-height: 1.6;
-  color: rgba(245,241,231,0.9); text-shadow: 0 6px 30px rgba(0,0,0,0.75);
+  color: var(--cream); text-shadow: 0 1px 10px rgba(0,0,0,0.85), 0 6px 30px rgba(0,0,0,0.6);
 }
 .fpanel--r .fpanel__text { margin-left: auto; }
 
@@ -196,10 +199,12 @@
 .pdf__title em { font-family: var(--serif); font-style: italic; color: var(--sage-deep); }
 .pdf__card p { color: var(--slate); line-height: 1.7; max-width: 48ch; }
 .pdf__btn {
-  display: inline-block; margin-top: 1.8rem; background: var(--sage-deep); color: #fff;
+  display: inline-block; margin-top: 1.8rem; background: var(--sage-deep); color: var(--cream);
   font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
   padding: 0.9rem 1.6rem; border-radius: 999px;
+  transition: background .35s ease, transform .35s cubic-bezier(.22,1,.36,1);
 }
+.pdf__btn:hover { transform: translateY(-2px); }
 .pdf__deco {
   justify-self: center; text-align: center; color: var(--sage-deep);
   font-family: var(--display); line-height: 0.8;

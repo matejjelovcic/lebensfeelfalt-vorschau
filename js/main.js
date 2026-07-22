@@ -252,48 +252,9 @@ const FILM = (function film() {
   paint(st.progress);
 })();
 
-/* ---- HERO PROPS: two real product photographs that behave like objects ------
-   Plain <img> cut-outs, not WebGL — the realism comes from the photograph itself,
-   and this costs a fraction of a second renderer. Each one breathes on its own and
-   leans/parallaxes toward the cursor, the far one moving less than the near one. */
-(function heroProps() {
-  const props = [
-    { el: document.getElementById('propRope'), depth: 1.0, rot: -7, bob: 4.2, dur: 6.5 },
-    { el: document.getElementById('propBand'), depth: 0.62, rot: 6, bob: -3.4, dur: 8.0 }
-  ].filter((p) => p.el);
-  if (!props.length || matchMedia('(hover: none)').matches) return;
-
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  for (const p of props) {
-    gsap.set(p.el, { rotate: p.rot, transformPerspective: 900 });
-    if (!reduced) {
-      // slow idle drift so they feel suspended rather than pasted on
-      gsap.to(p.el, { y: p.bob, rotate: p.rot + p.bob * 0.35, duration: p.dur,
-        ease: 'sine.inOut', yoyo: true, repeat: -1 });
-    }
-    p.qx = gsap.quickTo(p.el, 'x', { duration: 0.9, ease: 'power3.out' });
-    p.qry = gsap.quickTo(p.el, 'rotationY', { duration: 1.1, ease: 'power3.out' });
-    p.qrx = gsap.quickTo(p.el, 'rotationX', { duration: 1.1, ease: 'power3.out' });
-  }
-
-  if (reduced) return;
-  let ticking = false;
-  addEventListener('pointermove', (e) => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      ticking = false;
-      const nx = (e.clientX / innerWidth - 0.5) * 2;
-      const ny = (e.clientY / innerHeight - 0.5) * 2;
-      for (const p of props) {
-        p.qx(nx * 34 * p.depth);
-        p.qry(nx * 13 * p.depth);
-        p.qrx(-ny * 9 * p.depth);
-      }
-    });
-  }, { passive: true });
-})();
+/* (Removed a dead heroProps() IIFE here — it looked up #propRope/#propBand, which
+   the WebGL hero-props.js replaced long ago, so its props array was always empty and
+   it early-returned. The live hero props are in js/hero-props.js.) */
 
 /* ---- FILM SECTION: scroll only dissolves clips and moves the copy ---- */
 ScrollTrigger.create({
