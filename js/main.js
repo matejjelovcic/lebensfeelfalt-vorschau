@@ -52,6 +52,9 @@ let darkN = 0;
   Promise.race([ready, new Promise((r) => setTimeout(r, 5000))]).then(() => {
     gsap.to(state, { v: 100, duration: 0.3, onUpdate: () => { fill.style.width = state.v + '%'; pct.textContent = Math.round(state.v); },
       onComplete: () => {
+        // reduced-motion: hide the loader without the slide, and leave the hero at
+        // its natural state (no slide-in reveals)
+        if (REDUCED) { gsap.set('#loader', { display: 'none' }); return; }
         gsap.timeline()
           .to('#loader', { yPercent: -100, duration: 0.9, ease: 'power4.inOut' })
           .set('#loader', { display: 'none' })
@@ -279,7 +282,7 @@ ScrollTrigger.create({
     trigger: '.world', start: 'top top', end: 'bottom bottom',
     pin: '.world__stage', anticipatePin: 1
   });
-  gsap.from('.world__intro > *', { yPercent: 40, opacity: 0, stagger: 0.1, duration: 0.9, ease: 'power3.out',
+  if (!REDUCED) gsap.from('.world__intro > *', { yPercent: 40, opacity: 0, stagger: 0.1, duration: 0.9, ease: 'power3.out',
     scrollTrigger: { trigger: '.world', start: 'top 60%' } });
   /* labels + hint are driven purely by the scrub below — a one-shot tween on them
      re-fires on re-entry and overwrites the scrubbed value, leaving them stuck on. */
@@ -346,6 +349,14 @@ document.querySelectorAll('.nav__cta, .pdf__btn').forEach((el) => magnet(el, 0.4
   });
 })();
 
+/* Decorative scroll reveals. All of these use .from()/.fromTo(), so their target's
+   natural CSS state is the final, visible state — skipping them under
+   prefers-reduced-motion simply presents the content without motion, which is the
+   accessible default the motion guardrails ask for. Essential scroll logic (the
+   film handover, the pinned world, the progress bar, nav colour) lives above and is
+   deliberately NOT inside this guard. */
+if (!REDUCED) {
+
 /* ================= ANGEBOTE cards ================= */
 gsap.fromTo('.offer',
   { clipPath: 'inset(0 0 100% 0)', y: 40 },
@@ -393,6 +404,8 @@ gsap.to('.pdf__deco', { yPercent: -12, ease: 'none',
   gsap.from('.footer__lead, .footer__contact, .footer__legal', { yPercent: 40, opacity: 0, stagger: 0.08, duration: 0.8, ease: 'power3.out',
     scrollTrigger: { trigger: '.footer__inner', start: 'top 70%' } });
 })();
+
+} // end if (!REDUCED) — decorative scroll reveals
 
 /* mobile menu */
 (function mobileMenu() {
