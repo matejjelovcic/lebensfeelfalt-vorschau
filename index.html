@@ -3,22 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LebensFEELfalt by Patrick Holz — Sport &amp; Ernährung</title>
-  <meta name="description" content="LebensFEELfalt by Patrick Holz — Personal Training und bewusste Ernährung für ein gesünderes Leben. Alltagstauglich, ohne Abo, ohne versteckte Kosten.">
+  <title>Personal Training &amp; Ernährungsberatung im Raum Neustadt | LebensFEELfalt</title>
+  <meta name="description" content="Personal Training und Ernährungsberatung im Raum Neustadt. Patrick Holz begleitet dich alltagstauglich zu einem gesünderen Leben. Ohne Abo, ohne versteckte Kosten.">
   <meta name="theme-color" content="#f5f1e7">
+  <!-- PREVIEW BUILD: noindex keeps the client-preview URL out of search until it moves
+       to the real domain. Remove this robots tag and update canonical/og:url at launch. -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://matejjelovcic.github.io/lebensfeelfalt-vorschau/">
+
+  <!-- Open Graph / Twitter: without these the link previews as a blank box in
+       WhatsApp/Slack. og.jpg is a 1200x630 crop of the hero. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LebensFEELfalt by Patrick Holz">
+  <meta property="og:title" content="Personal Training & Ernährungsberatung im Raum Neustadt">
+  <meta property="og:description" content="Alltagstauglich zu einem gesünderen Leben. Ohne Abo, ohne versteckte Kosten.">
+  <meta property="og:image" content="https://matejjelovcic.github.io/lebensfeelfalt-vorschau/img/og.jpg?v=1">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://matejjelovcic.github.io/lebensfeelfalt-vorschau/">
+  <meta property="og:locale" content="de_DE">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Personal Training & Ernährungsberatung im Raum Neustadt">
+  <meta name="twitter:description" content="Alltagstauglich zu einem gesünderen Leben. Ohne Abo, ohne versteckte Kosten.">
+  <meta name="twitter:image" content="https://matejjelovcic.github.io/lebensfeelfalt-vorschau/img/og.jpg?v=1">
+
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/fraunces-v38-latin_latin-ext-900.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/fraunces-v38-latin_latin-ext-italic.woff2" crossorigin>
-  <link rel="preload" as="image" href="img/hero-cut.webp?v=13">
-  <link rel="preload" as="image" href="img/reveal-cut.webp?v=13">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%236bb29b'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='28' font-weight='700' text-anchor='middle' fill='%23fff'%3ELF%3C/text%3E%3C/svg%3E">
+  <link rel="preload" as="image" href="img/hero-cut.webp?v=14">
+  <link rel="preload" as="image" href="img/reveal-cut.webp?v=14">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png?v=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/icon-180.png?v=1">
   <link rel="stylesheet" href="assets/fonts/fonts.css">
-  <link rel="stylesheet" href="css/style.css?v=15">
-  <link rel="stylesheet" href="css/sections.css?v=3">
+  <link rel="stylesheet" href="css/style.css?v=18">
+  <link rel="stylesheet" href="css/sections.css?v=4">
   <script type="importmap">
   { "imports": {
-      "three": "./vendor/three-build/three.module.js",
+      "three": "./vendor/three-build/three.module.min.js",
       "three/addons/": "./vendor/three-jsm/"
   } }
+  </script>
+
+  <!-- LocalBusiness structured data. Phone and street address are intentionally
+       OMITTED until Patrick confirms them (the displayed number is currently
+       unverified) — a wrong number here would propagate the error to Google. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HealthAndBeautyBusiness",
+    "name": "LebensFEELfalt by Patrick Holz",
+    "description": "Personal Training und Ernährungsberatung im Raum Neustadt.",
+    "url": "https://matejjelovcic.github.io/lebensfeelfalt-vorschau/",
+    "image": "https://matejjelovcic.github.io/lebensfeelfalt-vorschau/img/og.jpg",
+    "email": "info@lebensfeelfalt.de",
+    "areaServed": "Raum Neustadt",
+    "priceRange": "€€",
+    "founder": { "@type": "Person", "name": "Patrick Holz", "jobTitle": "Personal Trainer & Ernährungscoach" }
+  }
   </script>
 </head>
 <body>
@@ -38,8 +79,8 @@
   <!-- ======== FILM: fixed scroll-driven frame sequence (immune to sticky issues) ======== -->
   <!-- Six clips that simply loop. Scroll never touches playback — it only cross-dissolves
        one clip into the next and drives the copy in and out. -->
-  <div class="film" id="film" aria-hidden="true">
-    <div class="film__stack" id="filmStack">
+  <div class="film" id="film">
+    <div class="film__stack" id="filmStack" aria-hidden="true">
       <video class="film__v" data-i="0" src="video/web2/chop.mp4"     muted loop playsinline preload="auto"></video>
       <video class="film__v" data-i="1" src="video/web2/smoothie.mp4" muted loop playsinline preload="none"></video>
       <video class="film__v" data-i="2" src="video/web2/scatter.mp4"  muted loop playsinline preload="none"></video>
@@ -47,14 +88,14 @@
       <video class="film__v" data-i="4" src="video/web2/kettle.mp4"   muted loop playsinline preload="none"></video>
       <video class="film__v" data-i="5" src="video/web2/run.mp4"      muted loop playsinline preload="none"></video>
     </div>
-    <div class="film__grade"></div>
+    <div class="film__grade" aria-hidden="true"></div>
 
     <!-- two beats per clip: one from the left, then one from the right -->
     <div class="film__panels" id="filmPanels">
       <div class="fpanel fpanel--l" data-v="0" data-s="0">
         <span class="fpanel__no">01</span>
         <h3 class="fpanel__title">Bewusst <em>essen.</em></h3>
-        <p class="fpanel__text">Frisch, regional, saisonal. Kein Pulver, keine Wunderkur — echtes Essen, das dir schmeckt.</p>
+        <p class="fpanel__text">Frisch, regional, saisonal. Kein Pulver, keine Crash-Diät. Echtes Essen, das dir schmeckt.</p>
       </div>
       <div class="fpanel fpanel--r" data-v="0" data-s="1">
         <span class="fpanel__no">02</span>
@@ -76,12 +117,12 @@
       <div class="fpanel fpanel--l" data-v="2" data-s="0">
         <span class="fpanel__no">05</span>
         <h3 class="fpanel__title">Frisch. <em>Regional.</em></h3>
-        <p class="fpanel__text">Vitalstoffe, die wirklich ankommen — statt leerer Kalorien, die nur satt machen.</p>
+        <p class="fpanel__text">Vitalstoffe, die wirklich ankommen, statt leerer Kalorien, die nur satt machen.</p>
       </div>
       <div class="fpanel fpanel--r" data-v="2" data-s="1">
         <span class="fpanel__no">06</span>
         <h3 class="fpanel__title">Dein <em>Plan.</em></h3>
-        <p class="fpanel__text">Kein Standard-PDF. Eine Ernährung, die zu deinem Ziel und deinem Kühlschrank passt.</p>
+        <p class="fpanel__text">Kein Plan von der Stange. Eine Ernährung, die zu deinem Ziel und deinem Kühlschrank passt.</p>
       </div>
 
       <div class="fpanel fpanel--l" data-v="3" data-s="0">
@@ -98,7 +139,7 @@
       <div class="fpanel fpanel--l" data-v="4" data-s="0">
         <span class="fpanel__no">09</span>
         <h3 class="fpanel__title">Echtes <em>Training.</em></h3>
-        <p class="fpanel__text">Übungen, die zu deinem Körper passen — nicht die, die gerade im Trend sind.</p>
+        <p class="fpanel__text">Übungen, die zu deinem Körper passen. Nicht die, die gerade im Trend sind.</p>
       </div>
       <div class="fpanel fpanel--r" data-v="4" data-s="1">
         <span class="fpanel__no">10</span>
@@ -114,7 +155,7 @@
       <div class="fpanel fpanel--r" data-v="5" data-s="1">
         <span class="fpanel__no">12</span>
         <h3 class="fpanel__title">Wir fangen <em>an.</em></h3>
-        <p class="fpanel__text">Ein Gespräch, eine ehrliche Bestandsaufnahme — und dann der erste Schritt.</p>
+        <p class="fpanel__text">Ein Gespräch, eine ehrliche Bestandsaufnahme, und dann der erste Schritt.</p>
       </div>
     </div>
   </div>
@@ -135,14 +176,28 @@
         <span>Termin sichern</span>
         <i aria-hidden="true">→</i>
       </a>
+      <button class="nav__toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span>
+      </button>
     </div>
   </header>
 
+  <!-- phones/tablets: the four nav links are hidden below 900px; this overlay carries
+       them so the site is navigable on the majority-traffic case -->
+  <nav class="nav__mobile" id="mobileMenu" aria-hidden="true" aria-label="Hauptmenü">
+    <a href="#journey">Philosophie</a>
+    <a href="#welten">Sport &amp; Ernährung</a>
+    <a href="#angebote">Angebote</a>
+    <a href="#warum">Über mich</a>
+    <a href="#kontakt" class="nav__mobile-cta">Termin sichern →</a>
+  </nav>
+
   <div id="smooth-wrapper">
-    <div id="smooth-content">
+    <main id="smooth-content">
 
       <!-- ======== 1 · HERO — liquid reveal ======== -->
-      <section class="hero" id="top">
+      <section class="hero" id="top" aria-label="LebensFEELfalt — Personal Training und Ernährungsberatung">
+        <h1 class="sr-only">LebensFEELfalt — Personal Training und Ernährungsberatung im Raum Neustadt mit Patrick Holz</h1>
         <div class="hero__bg" aria-hidden="true">
           <canvas class="hero__lines" id="flowLines"></canvas>
           <span class="hero__glow hero__glow--a"></span>
@@ -179,8 +234,8 @@
                data-auto-sweep="1" data-sweep-period="5600" data-sweep-duration="2200"
                data-sweep-gap="700" data-sweep-life="300" data-sweep-scale="0.95"
                data-sweep-ys="0.20,0.84">
-            <img data-lr-bottom src="img/reveal-cut.webp?v=13" alt="" aria-hidden="true">
-            <img data-lr-top class="hero__portrait" src="img/hero-cut.webp?v=13" alt="Patrick Holz — Personal Trainer &amp; Ernährungscoach">
+            <img data-lr-bottom src="img/reveal-cut.webp?v=14" alt="" aria-hidden="true">
+            <img data-lr-top class="hero__portrait" src="img/hero-cut.webp?v=14" alt="Patrick Holz — Personal Trainer &amp; Ernährungscoach">
             <canvas data-lr-canvas aria-hidden="true"></canvas>
           </div>
         </div>
@@ -210,7 +265,7 @@
           <div class="world__intro">
             <span class="eyebrow">Zwei Welten, ein Ziel</span>
             <h2 class="world__title">Sport <span class="amp">&amp;</span><br><em>Ernährung.</em></h2>
-            <p class="world__lead">Alles hängt zusammen. Zieh an den beiden Objekten — dreh sie, spür den Unterschied. Beides zusammen macht dein gesünderes Leben aus.</p>
+            <p class="world__lead">Training und Ernährung ziehen am selben Strang. Dreh an beiden und schau, wie das eine ohne das andere kippt. Erst zusammen ergeben sie dein gesünderes Leben.</p>
           </div>
           <div class="world__labels" aria-hidden="true">
             <div class="world__label world__label--sport"><span>01</span> Training<br><em>für deinen Körper</em></div>
@@ -219,10 +274,10 @@
           <div class="world__hint" id="worldHint" data-cursor="Ziehen">↔ ziehen zum Drehen</div>
 
           <!-- act panels: each object dives out of frame and hands over to one of these -->
-          <div class="act act--left" id="actFood" aria-hidden="true">
+          <div class="act act--left" id="actFood">
             <span class="eyebrow">01 — Ernährung</span>
             <h3 class="act__title">Iss dich <em>stark.</em></h3>
-            <p class="act__lead">Kein Verzicht, keine Kalorientabellen. Wir schauen uns an, was du wirklich isst — und bauen daraus einen Plan, der zu deinem Alltag passt.</p>
+            <p class="act__lead">Kein Verzicht, keine Kalorientabellen. Wir schauen uns an, was du wirklich isst, und bauen daraus einen Plan, der zu deinem Alltag passt.</p>
             <ul class="act__list">
               <li>Ernährungsanalyse &amp; persönlicher Plan</li>
               <li>Alltagstaugliche Rezepte, regional &amp; frisch</li>
@@ -230,10 +285,10 @@
             </ul>
           </div>
 
-          <div class="act act--right" id="actSport" aria-hidden="true">
+          <div class="act act--right" id="actSport">
             <span class="eyebrow">02 — Training</span>
             <h3 class="act__title">Trainier dich <em>frei.</em></h3>
-            <p class="act__lead">Ob 1:1, zu zweit oder in der Gruppe — dein Training richtet sich nach deinem Körper, deinem Ziel und deiner Zeit. Nicht andersrum.</p>
+            <p class="act__lead">Ob 1:1, zu zweit oder in der Gruppe: dein Training richtet sich nach deinem Körper, deinem Ziel und deiner Zeit. Nicht andersrum.</p>
             <ul class="act__list">
               <li>Personal Training bei dir oder draußen</li>
               <li>Kraft, Beweglichkeit &amp; Ausdauer im Gleichgewicht</li>
@@ -259,33 +314,33 @@
         <div class="angebote__head">
           <span class="eyebrow">Deine Möglichkeiten</span>
           <h2 class="section-title">Angebote</h2>
-          <p class="angebote__sub">Zielgerichtet, alltagstauglich — ohne Abo, ohne versteckte Kosten. Du zahlst nur, was du nutzt.</p>
+          <p class="angebote__sub">Zielgerichtet und alltagstauglich. Ohne Abo, ohne versteckte Kosten. Du zahlst nur, was du nutzt.</p>
         </div>
         <div class="angebote__grid">
-          <article class="offer glass" data-cursor="Mehr" style="--img:url('../img/train-coach.webp')">
+          <a class="offer glass" href="#kontakt" data-cursor="Anfragen" style="--img:url('../img/train-coach.webp')">
             <span class="offer__no">01</span>
             <h3 class="offer__title">Personal Training</h3>
-            <p class="offer__desc">1:1 oder in der Kleingruppe. Übungsprogramme, die zu deinem Alltag passen — unter meiner Anleitung.</p>
+            <p class="offer__desc">1:1 oder in der Kleingruppe. Übungsprogramme, die zu deinem Alltag passen, unter meiner Anleitung.</p>
             <span class="offer__tag">1:1 &amp; Gruppe</span>
-          </article>
-          <article class="offer glass" data-cursor="Mehr" style="--img:url('../img/food-veg.webp')">
+          </a>
+          <a class="offer glass" href="#kontakt" data-cursor="Anfragen" style="--img:url('../img/food-veg.webp')">
             <span class="offer__no">02</span>
             <h3 class="offer__title">Ernährungsberatung</h3>
-            <p class="offer__desc">Bewusste, ausgewogene Ernährung kennenlernen — Gewohnheiten analysieren und Schritt für Schritt umstellen.</p>
+            <p class="offer__desc">Bewusste, ausgewogene Ernährung kennenlernen, Gewohnheiten analysieren und nach und nach umstellen.</p>
             <span class="offer__tag">individuell</span>
-          </article>
-          <article class="offer glass" data-cursor="Mehr" style="--img:url('../img/o-smoothie.webp')">
+          </a>
+          <a class="offer glass" href="#kontakt" data-cursor="Anfragen" style="--img:url('../img/o-smoothie.webp')">
             <span class="offer__no">03</span>
             <h3 class="offer__title">Vitalstoffkuren</h3>
-            <p class="offer__desc">Gezielte Kuren zur Verbesserung deines Wohlbefindens — als sanfte Unterstützung deiner Ziele.</p>
+            <p class="offer__desc">Gezielte Kuren als sanfte Unterstützung deines Wohlbefindens.</p>
             <span class="offer__tag">Wohlbefinden</span>
-          </article>
-          <article class="offer glass" data-cursor="Mehr" style="--img:url('../img/o-meal.webp')">
+          </a>
+          <a class="offer glass" href="#kontakt" data-cursor="Anfragen" style="--img:url('../img/o-meal.webp')">
             <span class="offer__no">04</span>
             <h3 class="offer__title">Ernährungsumstellung</h3>
-            <p class="offer__desc">Kein Kalorienzählen, kein Verzicht auf alles. Regionale Lebensmittel genießen — Schritt für Schritt.</p>
+            <p class="offer__desc">Kein Kalorienzählen, kein kompletter Verzicht. Du lernst, regionale Lebensmittel wieder zu genießen.</p>
             <span class="offer__tag">alltagstauglich</span>
-          </article>
+          </a>
         </div>
       </section>
 
@@ -297,7 +352,7 @@
         <div class="warum__text">
           <span class="eyebrow">Warum ich</span>
           <h2 class="section-title">Mit Energie<br><em>an deiner Seite.</em></h2>
-          <p>Durch meine Ausbildungen und jahrelange Berufserfahrung sind ausgeklügelte, vielfach bewährte Konzepte entstanden. Mir liegt vor allem die Alltagstauglichkeit am Herzen — du sollst dir keinen Stress machen, essen worauf du Bock hast und einfach genießen können.</p>
+          <p>Durch meine Ausbildungen und jahrelange Berufserfahrung sind ausgeklügelte, vielfach bewährte Konzepte entstanden. Mir liegt vor allem die Alltagstauglichkeit am Herzen. Du sollst dir keinen Stress machen, essen, worauf du Bock hast, und einfach genießen.</p>
           <p>Kein Abo, keine versteckten Kosten, keine Preisfallen. Du kannst alles unverbindlich kennenlernen und bezahlst immer nur das, was du genutzt hast. Und ich verspreche dir: mit voller Energie, offen und herzlich an deiner Seite.</p>
         </div>
       </section>
@@ -308,8 +363,8 @@
           <div class="pdf__left">
             <span class="eyebrow">Kostenlos für dich</span>
             <h2 class="pdf__title">Dein <em>Basiswissen</em> als Gratis-PDF.</h2>
-            <p>Erste Grundsätze ausgewogener, basischer Ernährung — ein sanfter Einstieg. Enthält die Basis-Anleitung des „5 am Tag“-Prinzips und der überwiegend basischen Ernährung.</p>
-            <a class="pdf__btn" href="#kontakt" data-cursor="Los">PDF herunterladen →</a>
+            <p>Erste Grundsätze einer ausgewogenen Ernährung, ein sanfter Einstieg. Mit einer einfachen Anleitung zum „5 am Tag“-Prinzip.</p>
+            <a class="pdf__btn" href="#kontakt" data-cursor="Los">PDF anfordern →</a>
           </div>
           <div class="pdf__deco" aria-hidden="true">
             <span>5</span><small>am Tag</small>
@@ -318,11 +373,11 @@
       </section>
 
       <!-- ======== 8 · KONTAKT / FOOTER ======== -->
-      <footer class="footer" id="kontakt">
+      <footer class="footer" id="kontakt" role="contentinfo">
         <div class="footer__inner">
-          <span class="eyebrow eyebrow--light">Fasse deinen Entschluss</span>
+          <span class="eyebrow eyebrow--light">Dann leg los</span>
           <h2 class="footer__big">Fühl<br>dein <em>Leben.</em></h2>
-          <p class="footer__lead">Gerne erstelle ich dir ein individuelles Konzept, das all deine Wünsche und Ziele berücksichtigt. Melde dich — ich freue mich auf dich.</p>
+          <p class="footer__lead">Ich stelle dir ein Konzept zusammen, das zu deinen Zielen passt. Melde dich einfach, ich freu mich auf dich.</p>
           <div class="footer__contact">
             <a href="mailto:info@lebensfeelfalt.de" data-cursor="E-Mail">info@lebensfeelfalt.de</a>
             <a href="tel:+4917168444640" data-cursor="Anrufen">0171 68 44 464</a>
@@ -330,22 +385,25 @@
           </div>
         </div>
         <div class="footer__legal">
-          <span>© 2026 LebensFEELfalt by Patrick Holz</span>
-          <span>Kein Abo · Keine Fallen · Fühl dein Leben</span>
+          <span>© 2026 Lebens<em>FEEL</em>falt by Patrick Holz</span>
+          <span class="footer__links">
+            <a href="impressum.html">Impressum</a>
+            <a href="datenschutz.html">Datenschutz</a>
+          </span>
         </div>
       </footer>
 
-    </div>
+    </main>
   </div>
 
   <script src="vendor/gsap.min.js"></script>
   <script src="vendor/ScrollTrigger.min.js"></script>
   <script src="vendor/ScrollSmoother.min.js"></script>
   <script src="vendor/SplitText.min.js"></script>
-  <script src="js/flow-lines.js?v=5"></script>
+  <script src="js/flow-lines.js?v=6"></script>
   <script src="js/liquid-reveal.js?v=17"></script>
-  <script type="module" src="js/scene.js?v=2"></script>
+  <script type="module" src="js/scene.js?v=3"></script>
   <script type="module" src="js/hero-props.js?v=6"></script>
-  <script src="js/main.js?v=6"></script>
+  <script src="js/main.js?v=8"></script>
 </body>
 </html>

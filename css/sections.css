@@ -217,14 +217,22 @@
 .footer__big em { font-family: var(--serif); font-style: italic; color: var(--sage-soft); }
 .footer__lead { color: rgba(245,241,231,0.72); line-height: 1.8; max-width: 44ch; }
 .footer__contact { display: flex; flex-wrap: wrap; gap: 2.5rem; margin-top: 3rem; font-size: 1.1rem; }
-.footer__contact a { border-bottom: 1px solid var(--sage); padding-bottom: 3px; transition: color .3s; }
+/* real hit area — these were 23px tall, half the 44px minimum, and they are the
+   site's only conversion links */
+.footer__contact a { display: inline-block; border-bottom: 1px solid var(--sage); padding: 0.6rem 0 0.5rem; transition: color .3s; }
 .footer__contact a:hover { color: var(--sage-soft); }
 .footer__contact span { color: rgba(245,241,231,0.6); }
 .footer__legal {
-  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; align-items: center;
   margin-top: 12vh; padding-top: 2rem; border-top: 1px solid rgba(245,241,231,0.12);
-  font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,241,231,0.5);
+  font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,241,231,0.62);
 }
+/* the wordmark keeps its Binnenmajuskel — uppercasing it kills the Lebens/FEEL/falt play */
+.footer__legal span:first-child { text-transform: none; letter-spacing: 0.01em; }
+.footer__legal em { font-style: normal; color: var(--sage); }
+.footer__links { display: flex; gap: 1.4rem; }
+.footer__links a { padding: 0.4rem 0; border-bottom: 1px solid transparent; transition: border-color .25s; }
+.footer__links a:hover { border-color: var(--sage); }
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 900px) {
@@ -232,4 +240,17 @@
   .warum { grid-template-columns: 1fr; }
   .pdf__card { grid-template-columns: 1fr; }
   .world__intro { left: 6vw; right: 6vw; }
+  /* the act panels were min(36vw,40ch) = a ~140px ragged column on phones, 64% empty.
+     Give them the full width and drop the decorative labels that collided with them. */
+  .act, .act--left, .act--right {
+    left: 6vw; right: 6vw; width: auto; text-align: left;
+  }
+  .act--right, .act--right .act__list li { text-align: left; padding-left: 0; padding-right: 0; }
+  .world__labels { display: none; }
+}
+/* phone landscape: the intro copy and the decorative labels stack into the same
+   band. Hide the labels and lift the copy. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .world__labels { display: none; }
+  .world__intro { top: 12vh; }
 }

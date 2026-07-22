@@ -85,8 +85,11 @@
           b.warp = Math.min(1, b.warp + f * 0.055);
           // and they lean toward one another, like surface tension
           const nx = dx / (d || 1), ny = dy / (d || 1);
-          a.ax = -nx * f; a.ay = -ny * f;
-          b.ax = nx * f;  b.ay = ny * f;
+          // accumulate — with assignment, only the last-evaluated neighbour pair
+          // moved an ellipse; every earlier pair's lean was discarded. The per-frame
+          // reset (e.ax = 0) above makes += safe.
+          a.ax -= nx * f; a.ay -= ny * f;
+          b.ax += nx * f; b.ay += ny * f;
         }
       }
     }

@@ -1,0 +1,8 @@
+# PREVIEW BUILD — this client-preview URL is intentionally kept out of search
+# (the <head> also carries robots: noindex,nofollow). At launch on the real
+# domain, replace the block below with:
+#   User-agent: *
+#   Allow: /
+#   Sitemap: https://<production-domain>/sitemap.xml
+User-agent: *
+Disallow: /

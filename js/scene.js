@@ -15,7 +15,7 @@ if (canvas && section) init();
 function init() {
   THREE.ColorManagement.enabled = true;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.25));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.08;
@@ -80,7 +80,8 @@ function init() {
   let loaded = 0;
   function warmup() {
     if (++loaded < 2) return;
-    try { renderer.compile(scene, camera); renderer.render(scene, camera); } catch (e) {}
+    try { renderer.compile(scene, camera); renderer.render(scene, camera); }
+    catch (e) { console.warn('world warmup failed', e); }
     requestRender();
   }
   loader.load('models/bowl-fruit.glb', (g) => {
@@ -207,7 +208,7 @@ function init() {
   function resize() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
     camera.aspect = w / h; camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.25));
     renderer.setSize(w, h, false); requestRender();
   }
   addEventListener('resize', resize); resize();

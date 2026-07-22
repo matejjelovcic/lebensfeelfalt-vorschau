@@ -29,7 +29,9 @@ gsap.to('#progress', { scaleX: 1, ease: 'none',
 
 /* ---------- nav light over dark sections ---------- */
 let darkN = 0;
-['.journey', '.footer'].forEach((sel) => ScrollTrigger.create({
+/* .manifest is the third dark full-screen section; without it the cream nav pill
+   floats unreadably over dark slate. darkN already handles overlaps. */
+['.journey', '.manifest', '.footer'].forEach((sel) => ScrollTrigger.create({
   trigger: sel, start: 'top 4rem', end: 'bottom 4rem',
   onToggle: (s) => { darkN += s.isActive ? 1 : -1; document.getElementById('nav').classList.toggle('nav--light', darkN > 0); }
 }));
@@ -144,9 +146,11 @@ const FILM = (function film() {
 
       // only what's actually on screen needs to decode
       const covered = i < N - 1 && cl((x - (i + 1 - FADE)) / FADE) >= 1;
+      // under prefers-reduced-motion the clips hold on their first frame; the
+      // scroll-driven cross-dissolve and copy choreography still work
       const live = o > 0.001 && !covered;
-      if (live && v.paused) v.play().catch(() => {});
-      else if (!live && !v.paused) v.pause();
+      if (!REDUCED && live && v.paused) v.play().catch(() => {});
+      else if ((!live || REDUCED) && !v.paused) v.pause();
     }
 
     for (const q of panels) {
@@ -177,7 +181,7 @@ const FILM = (function film() {
 
   function load() {
     ensure(0);
-    vids[0].play().catch(() => {});
+    if (!REDUCED) vids[0].play().catch(() => {});
     const first = vids[0];
     if (first.readyState >= 2) return Promise.resolve();
     return new Promise((res) => {
@@ -189,7 +193,16 @@ const FILM = (function film() {
     });
   }
 
-  return { load, apply, size() {}, setVisible: (o) => { el.style.opacity = cl(o); } };
+  return {
+    load, apply, size() {},
+    // authoritative: while the film layer is fully transparent (the hero before any
+    // scroll, and everything from the manifest past the footer) pause EVERY clip so
+    // nothing decodes off-screen. apply() resumes the live clip once it fades back in.
+    setVisible: (o) => {
+      el.style.opacity = cl(o);
+      if (o <= 0.001) for (const v of vids) if (!v.paused) v.pause();
+    }
+  };
 })();
 
 /* ---- HERO → FILM: one clean dissolve, no travel -----------------------------
@@ -417,10 +430,34 @@ gsap.to('.pdf__deco', { yPercent: -12, ease: 'none',
     scrollTrigger: { trigger: '.footer__inner', start: 'top 70%' } });
 })();
 
-/* smooth-scroll anchors */
+/* mobile menu */
+(function mobileMenu() {
+  const nav = document.getElementById('nav');
+  const btn = document.getElementById('navToggle');
+  const menu = document.getElementById('mobileMenu');
+  if (!nav || !btn || !menu) return;
+  const setOpen = (open) => {
+    nav.classList.toggle('is-open', open);
+    menu.classList.toggle('is-open', open);
+    menu.setAttribute('aria-hidden', String(!open));
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  btn.addEventListener('click', () => setOpen(!menu.classList.contains('is-open')));
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+})();
+
+/* smooth-scroll anchors — duration capped so "Termin sichern" from the top doesn't
+   spend ~4s flying to the footer */
 document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', (e) => {
-  e.preventDefault(); const t = a.getAttribute('href');
-  if (t && t !== '#') smoother.scrollTo(t, true, 'top top');
+  const t = a.getAttribute('href');
+  if (!t || t === '#') return;
+  e.preventDefault();
+  const y = smoother.offset(t, 'top top');
+  const dist = Math.abs(y - smoother.scrollTop());
+  gsap.to(smoother, { scrollTop: y, duration: Math.min(1.2, 0.3 + dist / 14000), ease: 'power2.inOut' });
 }));
 
 window.addEventListener('load', () => ScrollTrigger.refresh());
